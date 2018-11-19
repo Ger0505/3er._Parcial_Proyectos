@@ -1,0 +1,70 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define Nodo struct nodo
+
+Nodo{
+	int dato;
+	Nodo*siguiente;
+};
+
+void insertarInicio(int dato);
+void visualizarLista();
+void ordenar();
+
+Nodo*final=NULL;
+Nodo*inicio=NULL;
+
+
+int main(){
+	int N,dato,i;
+	printf("No. de elementos:");
+	scanf("%i",&N);
+	for(i=0;i<N;i++){
+		scanf("%i",&dato);
+		insertarInicio(dato);
+	}
+	printf("------------------\n");
+	printf("Lista:\n");
+	visualizarLista();
+	printf("\n------------------\n");
+	printf("Lista Ordenada:\n");
+	ordenar();
+	visualizarLista();
+}
+
+void insertarInicio(int dato){
+	Nodo*nuevo=(Nodo*)malloc(sizeof(int));
+	nuevo->dato=dato;
+	nuevo->siguiente=NULL;
+	if(inicio==NULL){
+		inicio=nuevo;
+		final=nuevo;
+	}else{
+		nuevo->siguiente=inicio;
+		inicio=nuevo;
+	}
+}
+
+void visualizarLista(){
+	Nodo*aux=inicio;
+	while(aux!=NULL){
+		printf("%i ",aux->dato);
+		aux=aux->siguiente;
+	}
+}
+
+void ordenar(){
+	Nodo*externo=inicio;
+	while(externo!=NULL){
+		Nodo*interno=externo->siguiente;
+		while(interno!=NULL){
+			if(externo->dato<interno->dato){
+				int aux=externo->dato;
+				externo->dato=interno->dato;
+				interno->dato=aux;
+			}
+			interno=interno->siguiente;
+		}
+		externo=externo->siguiente;
+	}
+}
